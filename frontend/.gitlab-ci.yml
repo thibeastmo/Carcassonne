@@ -1,0 +1,37 @@
+stages:
+  - build
+  - test
+  - deploy
+
+
+build-job:
+  stage: build
+  image: node:latest
+  script:
+    - npm ci
+    - npm run build
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+vite-tests:
+  stage: test
+  image: node:latest
+  script:
+    - npm ci
+    - npm run test
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+deploy-job:
+  stage: deploy
+  image: docker:latest
+  services:
+    - docker:20.10.16-dind
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -t $CI_REGISTRY/kdg-ti/integratieproject-2/teams-23-24/team7/frontend:latest .
+    - docker push $CI_REGISTRY/kdg-ti/integratieproject-2/teams-23-24/team7/frontend:latest
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH

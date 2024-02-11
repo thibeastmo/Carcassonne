@@ -1,0 +1,32 @@
+### SEND FRIEND REQUEST WITH ACCOUNT ID
+POST http://localhost:8081/api/account/send-friend-request-with-account-id?accountId=05184dc2-75f1-41e8-bcff-5881b1674e7b
+Authorization: Bearer {{access_token}}
+Accept: application/json
+
+### SEND FRIEND REQUEST WITH USERNAME OR EMAIL
+POST http://localhost:8081/api/account/send-friend-request-with-username-or-email?usernameOrEmail=michieliskoning
+Authorization: Bearer {{access_token}}
+Accept: application/json
+
+### ACCEPT FRIEND REQUEST
+POST http://localhost:8081/api/account/accept-friend-request?friendRequestId=ad91f08a-cbd8-4322-8ddb-f9cb0259eab5
+Authorization: Bearer {{access_token}}
+Accept: application/json
+
+### GET ALL FRIEND REQUESTS
+GET http://localhost:8081/api/account/get-friend-requests
+Authorization: Bearer {{access_token}}
+
+### DELETE REQUEST
+DELETE http://localhost:8081/api/account/delete-friend-request?friendRequestId=b695c97e-a458-4a2c-8bd6-ee460e9585de
+Authorization: Bearer {{access_token}}
+
+### DELETE FRIENDSHIP
+DELETE http://localhost:8081/api/account/delete-friendship?friendId=c5019485-b480-49cc-bb3c-66ff488467a0
+Authorization: Bearer {{access_token}}
+
+
+
+### GET FRIENDS
+GET http://localhost:8081/api/account/get-friends
+Authorization: Bearer {{access_token}}

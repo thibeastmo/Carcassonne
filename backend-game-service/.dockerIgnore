@@ -1,0 +1,22 @@
+# Exclude system-specific files
+.DS_Store
+Thumbs.db
+
+# Exclude build-related files
+/target/
+.gradle/
+/build/
+
+# Exclude IDE-related files
+.idea/
+*.iml
+
+# Exclude logs and temporary files
+/logs/
+*.log
+*.tmp
+
+# Exclude test-related files (if not needed in the image)
+
+# Exclude any other unnecessary files or directories
+# Add more exclusions as needed based on your project structure

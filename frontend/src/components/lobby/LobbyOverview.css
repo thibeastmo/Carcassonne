@@ -1,0 +1,18 @@
+.wooden-border-box {
+    border: 9px solid transparent; /* Set a transparent border */
+    padding: 8px;
+    border-image-source: url('https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fb9%2F6d%2Fc2%2Fb96dc2efc13bd65a7fa752e2032320bc.jpg&f=1&nofb=1&ipt=e1cc70c7a809147c946212401d3e5bcb2cadab415787d2b0fda8851a22d4a58b&ipo=images');
+    border-image-slice: 20; /* Adjust the slicing value as needed */
+    border-image-repeat: round; /* Adjust image repeat method */
+    background-size: 200% 2px, 2px 200%; /* Adjust the size of gradients */
+    background-origin: padding-box;
+    background-repeat: no-repeat;
+}
+
+.title {
+    border: 9px solid transparent; /* Set a transparent border */
+    border-image-source: url('https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fb9%2F6d%2Fc2%2Fb96dc2efc13bd65a7fa752e2032320bc.jpg&f=1&nofb=1&ipt=e1cc70c7a809147c946212401d3e5bcb2cadab415787d2b0fda8851a22d4a58b&ipo=images');
+    border-image-slice: 20; /* Adjust the slicing value as needed */
+    border-image-repeat: round; /* Adjust image repeat method */
+}
+

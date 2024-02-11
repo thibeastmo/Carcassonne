@@ -1,0 +1,77 @@
+POST http://localhost:8180/realms/CarcassonneRealm/protocol/openid-connect/token HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+client_id = CarcassonneAppApi &
+client_secret = iFAQFLL8miW1aOoRgctRtq0cr5ZkdUC6 &
+username = MichielIsKoning &
+password = password &
+grant_type = password &
+scope = openid
+> {%
+    client.global.set("access_token", response.body.access_token);
+%}
+
+### Create lobby
+
+POST http://localhost:8081/api/lobby/create-lobby
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "lobbyName": "Cool guys lobby",
+  "maxPlayers": 4,
+  "gameTypeEnum": "LONG"
+}
+
+> {%
+    client.global.set("lobbyId", response.body.lobbyId);
+%}
+
+
+### Get specific lobby
+
+GET http://localhost:8081/api/lobby/get-lobby?lobbyId={{lobbyId}}
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{access_token}}
+
+
+### Get all lobbies
+
+GET http://localhost:8081/api/lobby/get-all-open-lobbies
+Authorization: Bearer {{access_token}}
+
+### Join lobby
+
+POST http://localhost:8081/api/lobby/join-lobby?lobbyId=1bc3f9bb-6e16-4526-a82a-af8c25604ef7
+Authorization: Bearer {{access_token}}
+
+### Start game from lobby
+
+POST http://localhost:8081/api/lobby/start-game?lobbyId={{lobbyId}}
+Authorization: Bearer {{access_token}}
+
+### Send invite
+
+POST http://localhost:8081/api/lobby/send-invite?lobbyId={{lobbyId}}&accountId=82140d68-51a3-4f71-84ba-9fa19fb86601
+Authorization: Bearer {{access_token}}
+
+> {%
+    client.global.set("inviteId", response.body.inviteId);
+%}
+
+### Accept invite
+
+PATCH http://localhost:8081/api/lobby/accept-invite?inviteId={{inviteId}}
+Authorization: Bearer {{access_token}}
+
+### Get invites
+
+GET http://localhost:8081/api/account/get-invites
+Authorization: Bearer {{access_token}}
+
+### Delete invite
+
+DELETE http://localhost:8081/api/lobby/delete-invite?inviteId={{inviteId}}
+Authorization: Bearer {{access_token}}
+

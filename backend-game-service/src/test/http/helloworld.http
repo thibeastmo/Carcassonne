@@ -1,0 +1,31 @@
+### GET ACCESS TOKEN
+POST http://localhost:8180/realms/CarcassonneRealm/protocol/openid-connect/token HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+client_id = CarcassonneAppApi &
+client_secret = iFAQFLL8miW1aOoRgctRtq0cr5ZkdUC6 &
+username = kvdw &
+password = Kristof2002 &
+grant_type = password &
+scope = openid
+> {%
+    client.global.set("access_token", response.body.access_token);
+%}
+### GET ACCESS TOKEN
+POST http://localhost:8180/realms/CarcassonneRealm/protocol/openid-connect/token HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+client_id = CarcassonneAppApi &
+client_secret = iFAQFLL8miW1aOoRgctRtq0cr5ZkdUC6 &
+username = nathan &
+password = Password123 &
+grant_type = password &
+scope = openid
+> {%
+    client.global.set("access_token", response.body.access_token);
+%}
+
+### get current loyalty info
+POST http://localhost:8081/api/account
+Accept: application/json
+Authorization: Bearer {{access_token}}

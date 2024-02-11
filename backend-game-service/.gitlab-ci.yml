@@ -1,0 +1,44 @@
+stages:
+  - build
+  - test
+  - deploy
+
+
+build-job:
+  stage: build
+  image: gradle:7.3.3-jdk17-alpine
+  script:
+    - chmod +x gradlew
+    - ./gradlew clean assemble
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+test-job:
+  tags:
+    - saas-linux-medium-amd64
+  stage: test
+  image: gradle:7.3.3-jdk17-alpine
+  variables:
+    POSTGRES_IP: $CI_POSTGRES_IP
+    POSTGRES_PORT: $CI_POSTGRES_PORT
+    POSTGRES_USER: $CI_POSTGRES_USER
+    POSTGRES_PASSWORD: $CI_POSTGRES_PASSWORD
+  script:
+    - chmod +x gradlew
+    - ./gradlew test -DINIT_DB=always -DPOSTGRES_IP=${POSTGRES_IP} -DPOSTGRES_PORT=${POSTGRES_PORT} -DPOSTGRES_USER=${POSTGRES_USER} -DPOSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  resource_group: testing
+
+deploy-job:
+  stage: deploy
+  image: docker:latest
+  services:
+    - docker:20.10.16-dind
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -t $CI_REGISTRY/kdg-ti/integratieproject-2/teams-23-24/team7/backend-game-service:latest .
+    - docker push $CI_REGISTRY/kdg-ti/integratieproject-2/teams-23-24/team7/backend-game-service:latest
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH

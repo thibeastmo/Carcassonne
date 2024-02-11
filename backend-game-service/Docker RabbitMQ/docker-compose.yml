@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: "rabbitmq:3.12.9-management-alpine"
+    ports:
+      - "5672:5672"  # standaard RabbitMQ-poort
+      - "15672:15672"  # RabbitMQ-beheerconsole
+    environment:
+      RABBITMQ_DEFAULT_USER: 'user'
+      RABBITMQ_DEFAULT_PASS: 'password'
+    networks:
+      - backend
+
+networks:
+  backend:
+    name: back-network
+    driver: bridge
